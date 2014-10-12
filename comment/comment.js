@@ -1,25 +1,33 @@
-/*----------------------------------loading comment----------------------------------*/
-var loaded=-20;
+var loaded=0;
 var loading=document.getElementById("loading");
+var reply;
 
-load();
-setInterval(function(){
-	load();
-	},1000);
+load(1);
+setTimeout(function(){
+    load(2);
+	loaded+=20;
+}, 1000);
 
 $(window).scroll(function() {   
-	if($(window).scrollTop() + $(window).height() == $(document).height()) {
-		load();
-
+	if ($(window).scrollTop() + $(window).height() == $(document).height()
+		&&
+		(document.getElementById("cmt-1")==null)) {
+			
+		load(1);
+		setTimeout(function(){
+			load(2);
+			loaded+=20;
+		}, 1000);
+		
 	}
 });
 
-function load() {
-if (document.getElementsByClassName("cmt-1")[0]==null){
+var mode;
+function load(mode) {//----------------------------------loading comment----------------------------------
 	document.getElementById("loading").style.visibility = "visible";
-    loaded+=20;
+    
 	$.ajax({
-		url: 'load.php?load='+loaded,
+		url: 'load.php?load='+loaded+'&mode='+mode,
 		type: 'POST',
 		data: {
 			page:$(this).data('page'),
@@ -27,28 +35,37 @@ if (document.getElementsByClassName("cmt-1")[0]==null){
 		success: function(response){
 			if(response){
 				loading.style.visibility = "hidden";
-				$("#commentList").append(response);
+				if(mode==1){
+					$("#commentList").append(response);
+					enableReply();
+				}
+				if(mode==2){
+					$("#replyList").append(response);
+					reply=document.getElementById("replyList").getElementsByClassName("reply");
+					comment=document.getElementById("commentList");
+					for(var i=0;reply.length!=0;i++){
+						comment.getElementsByTagName("div")[reply[0].id].appendChild(reply[0]);
+					}
+				}
 			}
 		}
 	});
-}
 
-if (document.getElementsByClassName("cmt-1")[0]!=null){
+if (document.getElementById("cmt-1")!=null){
 	loading.style.visibility = "hidden";
-	document.getElementsByClassName("cmt-1")[0].innerHTML="<center style=\"color:#4D4D4D;font-weight:bold;\">no more</center>";
+	document.getElementById("cmt-1").innerHTML="<center style=\"color:#4D4D4D;font-weight:bold;\">no more</center>";
+}
 }
 
+
+var Cid;
+function enableReply(){
+$(".cmt #reply").click(function(){
+  Cid=$(this).parent().attr("id").substring(4);
+  $(this).parent().append($('.cmt #commentbox'));
+  $(".cmt #commentbox #Cid").attr('value',''+Cid);
+});
 }
-
-
-/*----------------------------------reply----------------------------------*/
-/*
- * 
- *---------------------------still in building------------------------------
- * 
- * 
- * 
- *-------------------------------------------------------------------------*/
 
 
 

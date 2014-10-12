@@ -57,6 +57,7 @@
 		padding: 4px;
 		text-align: center;
 		width: 62px;
+		font-size:small;
 	}
 
 	#commentbox input {
@@ -69,10 +70,6 @@
 	
 	#commentbox #nameInput {
 		
-	}
-	
-	#commentbox label {
-		font-size:small;
 	}
 	
 	#commentbox #textInput {
@@ -96,21 +93,29 @@
 		padding: 10px;
 	}
 	
-	#cmt {
+	.cmt {
 		box-shadow: 0 0 10px #ddd;
-		border: 1px dotted #dddddd;
+		border: 1px dotted #ddd;
 		background-color: #FFFFFF;
-		padding:2%;
 		margin-bottom:10px;
+		padding:10px;
+	}
+	
+	.reply {
+		background-color:#FBFBFB;
+		border :1px dotted #ddd;
+		border-left:5px solid #ddd;
+		margin: -10px -10px 0 45px;
+		padding: 1px;
+		padding-right:10px;
 	}
 	
 	#cmtauthor{
 		margin-bottom:10px;
 		border-bottom:1px solid #8BC7FF;
 	}
-	
 		
-	#cmt #text {
+	#text {
 		margin-left:5px;
 		margin-bottom:20px;
 		color: #4D4D4D;
@@ -118,7 +123,7 @@
 	
 	n {
 		font-weight:bold;
-		color: #676767;
+		color: #3B3B3B;
 		font-style: normal;
 		left:0;
 	}
@@ -140,6 +145,10 @@
 		cursor:pointer;
 	}
 	
+	#hideCon {
+		visibility:hidden;
+	}
+	
 	img#loading {
 		height:120px;
 		width:120px;
@@ -147,17 +156,29 @@
 	
 	@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
 		/* iPhone, Android rules here */
+		*{
+			width:auto;
+			max-width:480px;
+		}
+		
 		div#container {
-			width:100%
+			width: auto;
+			max-width:480px;
+			padding:0;
+			margin:0;
+			border:1px solid #000;
 		}
 		
 		div#left_con {
-			float:auto;
-			margin:auto;
-			width:95%;
+			float:left;
+			width:96%;
+			padding:2%;
+			margin:0;
+			
 		}
 		
 		div#right_con {
+			border:1px solid #ccc;
 			visibility:hidden;
 		}
 		
